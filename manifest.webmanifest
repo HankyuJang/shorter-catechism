@@ -1,0 +1,14 @@
+{
+  "name": "웨스트민스터 소요리문답",
+  "short_name": "소요리문답",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#17352f",
+  "theme_color": "#17352f",
+  "lang": "ko",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
