@@ -1,6 +1,6 @@
 const KEY = 'wsc.v1';
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
-const state = Object.assign({ items: [], marks: [], last: 0, fs: 19, hide: false }, load());
+const state = Object.assign({ items: [], marks: [], last: 0, fs: 18, hide: false }, load());
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); return true; } catch { return false; } };
 const SOURCE = 'https://ko.ligonier.org/resources/creeds-and-confessions/the-westminster-shorter-catechism/';
 const app = document.getElementById('app');
@@ -113,7 +113,7 @@ function renderReader(n) {
       <button class="star" id="star" aria-pressed="${marked}" aria-label="별표">${marked ? '★' : '☆'}</button>
     </div>
     <div class="scroll" id="scroll">
-      <div class="call"><span class="num">${n}</span><h2>${esc(it.q)}</h2></div>
+      <div class="call"><span class="tag">제<span class="num">${n}</span>문 / ${total}</span><h2>${esc(it.q)}</h2></div>
       <div class="resp">
         ${state.hide ? '<button class="reveal" id="reveal">눌러서 답 보기</button>' : `<p>${esc(it.a)}</p>`}
         <button class="hide" id="hide">${state.hide ? '답 항상 보이기' : '암송 연습: 답 가리기'}</button>
@@ -159,5 +159,9 @@ addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft' && +m[1] > 1) location.replace(`#/${+m[1] - 1}`);
 });
 addEventListener('hashchange', route);
-if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+if ('serviceWorker' in navigator) {
+  const hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController) location.reload(); });
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
 route();
